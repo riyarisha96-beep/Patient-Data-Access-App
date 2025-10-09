@@ -1,89 +1,109 @@
-# Patient Data Access DApp (Hardhat + Streamlit)
+# 🏥 Patient Data Access DApp (Hardhat + Streamlit)
 
-A minimal end-to-end demo of **patient-centric data access control** for healthcare records.
-
-## What you get
-- Solidity smart contract (`blockchain/contracts/PatientDataAccess.sol`)
-- Hardhat config + deploy script (`npx hardhat node`, `npm run deploy:local`)
-- Streamlit frontend (`app/app.py`) using `web3.py`
-- Seamless handoff of `contract-info.json` from deploy to frontend
+A decentralized healthcare application enabling **secure and transparent patient data access** using blockchain technology.  
+This DApp empowers patients to control who can access their medical records while ensuring immutable audit trails for every data request.
 
 ---
 
-## Prerequisites (macOS)
-- **Node.js 18+** (recommended via `nvm`)
-- **Python 3.10+**
-- **Git**
-- **Homebrew** (optional)
+## 🚀 Project Overview
 
-```bash
-# Node via nvm
-brew install nvm       # if you don't have it
-mkdir -p ~/.nvm && echo 'export NVM_DIR="$HOME/.nvm"; [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"' >> ~/.zshrc
-source ~/.zshrc
-nvm install --lts
-nvm use --lts
+This project demonstrates a blockchain-based **Data Governance solution** for healthcare systems.  
+Built with **Solidity**, **Hardhat**, and **Streamlit**, it showcases how smart contracts can enforce patient consent, traceability, and data integrity in medical record management.
 
-# Python env (optional but recommended)
-python3 -m venv .venv
-source .venv/bin/activate
-```
+### ✳️ Core Features
+- 🔐 **Smart Contract (Solidity)** — Defines rules for granting, revoking, and logging data access.
+- ⚙️ **Hardhat Backend** — Handles local or testnet deployment (Sepolia / localhost).
+- 🧠 **Streamlit Frontend** — Simple, interactive web interface for patient and provider operations.
+- 🔗 **Web3 Integration** — Seamless communication between Python and Ethereum smart contracts.
+- 🧾 **Contract Metadata Sync** — Automated handoff of `contract-info.json` from backend to frontend.
 
 ---
 
-## 1) Start the blockchain (Hardhat)
+## 🧰 Tech Stack
+| Layer | Technology |
+|-------|-------------|
+| Smart Contract | Solidity (v0.8.24) |
+| Blockchain Framework | Hardhat |
+| Frontend | Streamlit |
+| Python Library | web3.py |
+| Environment | Node.js, Python 3.10+, Git |
+| Network | Ethereum Sepolia Testnet / Localhost |
+
+---
+
+## ⚙️ Setup Instructions (macOS / Linux)
+
+### 1️⃣ Clone the repository
 ```bash
+git clone https://github.com/roseshreya22-stack/patient-data-access-app.git
+cd patient-data-access-app
+
+# Install Dependencies 
+##Backend 
+
 cd blockchain
 npm install
-npx hardhat compile
-npm run node
-```
 
-Keep this terminal open (it runs the local chain at `http://127.0.0.1:8545`). It will print **20 accounts** and **private keys**.
-
-## 2) Deploy the contract
-Open a **second terminal**:
-
-```bash
-cd blockchain
-npm run deploy:local
-```
-
-This writes `artifacts-app/contract-info.json` and also copies it to `../app/contract-info.json`.
-
-## 3) Run the Streamlit app
-Open a **third terminal**:
-
-```bash
-cd app
+##Frontend
+cd ../app
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env
-# Edit `.env` to add:
-#   RPC_URL=http://127.0.0.1:8545
-#   PRIVATE_KEY=<paste one private key from the hardhat node output>
+
+#Smart Contract Deployment 
+##Local Deployment
+
+cd blockchain
+npx hardhat node
+# In another terminal
+npx hardhat run --network localhost scripts/deploy.js
+
+##This will deploy the contract to a local Hardhat blockchain and generate:
+artifacts-app/contract-info.json
+
+##Then copy it to the app directory:
+cp artifacts-app/contract-info.json ../app/contract-info.json
+
+#🔹 Sepolia Testnet Deployment
+##1.Create a .env file in the blockchain folder:
+SEPOLIA_RPC=https://eth-sepolia.g.alchemy.com/v2/YOUR_ALCHEMY_KEY
+DEPLOYER_PRIVATE_KEY=0xYOUR_METAMASK_PRIVATE_KEY
+
+##2.Deploy:
+npx hardhat compile
+npx hardhat run --network sepolia scripts/deploy.js
+
+#🖥️ Run the Streamlit App
+cd app
+source .venv/bin/activate
 streamlit run app.py
-```
 
-Then open the local URL that Streamlit prints (usually http://localhost:8501).
+##Patient View
+> Connect using your patient private key.
+> Grant or revoke access to healthcare providers.
+> View audit logs for all data access events.
 
-### Using the DApp
-1. Paste the same private key you used to **deploy** (first account) into the sidebar. This is the **patient** account.
-2. Copy one of the other Hardhat account addresses to act as a **provider**.
-3. **Grant Access** for a data type (e.g., `EHR`) to that provider address.
-4. Switch the private key in the sidebar to the provider's key and **Log Access** with a purpose.
-5. Use **Check Access** to verify permissions; see **Recent Access Events** update.
+##Provider View
+> Switch to a provider private key.
+> Attempt to log and verify access permissions.
 
----
 
-## Development Notes
-- Patient address is set in the contract **constructor** as the deployer.
-- **Do not** store PHI on-chain. Store only references or hashes if needed.
-- Events create an immutable audit trail (`DataAccessed`).
 
-## Troubleshooting
-- **Connection failed**: Is `npm run node` still running?
-- **Invalid private key**: paste exactly as printed by Hardhat; no quotes or 0x prefix if not shown.
-- **Nonce too low**: stop and restart Streamlit, or wait for pending txs to finalize.
-- **Contract not found**: delete any old `app/contract-info.json` and redeploy.
+📚 ##Notes for Students / Developers
+	•	This prototype is for educational and demonstration purposes only.
+	•	No real patient data is stored on-chain — only pseudonymous access metadata.
+	•	Extensible for other governance use cases: supply chain, finance, or identity verification.
+
+
+
+👩‍💻 ##Authors
+
+Shreya Singh
+Bachelor of Business Analytics, University of Newcastle
+This project was developed as part of the BUSA3007 - Data Governance Using Blockchain course.
+
+
+
+🪙 ##License
+
+MIT License © 2025 Shreya Singh
