@@ -1,6 +1,16 @@
-.env
-.venv
+# Python
+app/.venv/
 __pycache__/
-node_modules/
-hardhat_cache/
-artifacts/
+*.pyc
+
+# Node / Hardhat
+blockchain/node_modules/
+blockchain/cache/
+blockchain/artifacts/
+
+# Secrets / env
+*.env
+app/.streamlit/secrets.toml
+
+# macOS
+.DS_Store
