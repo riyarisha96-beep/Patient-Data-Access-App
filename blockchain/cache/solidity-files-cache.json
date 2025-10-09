@@ -1,0 +1,41 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/Users/shreyasingh/Desktop/patient-data-access-starter/blockchain/contracts/PatientDataAccess.sol": {
+      "lastModificationDate": 1759979969106,
+      "contentHash": "bbdad7ab8c768413033a652a2af052de",
+      "sourceName": "contracts/PatientDataAccess.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.24"
+      ],
+      "artifacts": [
+        "PatientDataAccess"
+      ]
+    }
+  }
+}
