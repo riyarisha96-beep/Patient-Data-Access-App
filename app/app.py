@@ -126,19 +126,36 @@ with st.form("log_access"):
             st.success(f"Logged access. Tx: {receipt.transactionHash.hex()}")
 
 st.subheader("Recent Access Events")
+
 try:
-    # Fetch events (may be many; keep it small)
     latest = w3.eth.block_number
     from_block = max(0, latest - 2000)
-    logs = contract.events.DataAccessed().get_logs(fromBlock=from_block, toBlock="latest")
-    if not logs:
-        st.caption("No DataAccessed events yet.")
+
+    # Fetch AccessGranted events
+    granted_logs = contract.events.AccessGranted.get_logs(from_block=from_block, to_block="latest")
+
+    # Fetch AccessRevoked events
+    revoked_logs = contract.events.AccessRevoked.get_logs(from_block=from_block, to_block="latest")
+
+    # Fetch DataAccessed events
+    accessed_logs = contract.events.DataAccessed.get_logs(from_block=from_block, to_block="latest")
+
+    if not granted_logs and not revoked_logs and not accessed_logs:
+        st.caption("No recent access events yet.")
     else:
-        for ev in reversed(logs[-20:]):  # show up to 20 latest
+        st.write("### Access Granted")
+        for ev in reversed(granted_logs[-10:]):
             args = ev["args"]
-            provider_addr = args["provider"]
-            data_type_hash = args["dataType"]
-            purpose_val = args["purpose"]
-            st.write(f"• **Provider:** `{provider_addr}` | **DataTypeHash:** `{data_type_hash.hex()}` | **Purpose:** `{purpose_val}` | **Block:** {ev['blockNumber']}")
+            st.write(f"✅ **Provider:** `{args['provider']}` | **DataType:** `{args['dataType'].hex()}` | **Block:** {ev['blockNumber']}")
+
+        st.write("### Access Revoked")
+        for ev in reversed(revoked_logs[-10:]):
+            args = ev["args"]
+            st.write(f"❌ **Provider:** `{args['provider']}` | **DataType:** `{args['dataType'].hex()}` | **Block:** {ev['blockNumber']}")
+
+        st.write("### Data Accessed")
+        for ev in reversed(accessed_logs[-10:]):
+            args = ev["args"]
+            st.write(f"📄 **Provider:** `{args['provider']}` | **DataType:** `{args['dataType'].hex()}` | **Purpose:** `{args['purpose']}` | **Block:** {ev['blockNumber']}")
 except Exception as e:
     st.warning(f"Could not load events: {e}")
