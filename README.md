@@ -50,7 +50,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 
-#Smart Contract Deployment 
+### **Smart Contract Deployment** 
 ##Local Deployment
 
 cd blockchain
@@ -64,7 +64,7 @@ artifacts-app/contract-info.json
 ##Then copy it to the app directory:
 cp artifacts-app/contract-info.json ../app/contract-info.json
 
-#🔹 Sepolia Testnet Deployment
+### 🔹 Sepolia Testnet Deployment
 ##1.Create a .env file in the blockchain folder:
 SEPOLIA_RPC=https://eth-sepolia.g.alchemy.com/v2/YOUR_ALCHEMY_KEY
 DEPLOYER_PRIVATE_KEY=0xYOUR_METAMASK_PRIVATE_KEY
@@ -73,7 +73,7 @@ DEPLOYER_PRIVATE_KEY=0xYOUR_METAMASK_PRIVATE_KEY
 npx hardhat compile
 npx hardhat run --network sepolia scripts/deploy.js
 
-#🖥️ Run the Streamlit App
+### 🖥️** Run the Streamlit App**
 cd app
 source .venv/bin/activate
 streamlit run app.py
@@ -89,14 +89,14 @@ streamlit run app.py
 
 
 
-📚 ##Notes for Students / Developers
+### 📚 **Notes for Students / Developers**
 	•	This prototype is for educational and demonstration purposes only.
 	•	No real patient data is stored on-chain — only pseudonymous access metadata.
 	•	Extensible for other governance use cases: supply chain, finance, or identity verification.
 
 
 
-👩‍💻 ##Authors
+### 👩‍💻 **Authors**
 
 Shreya Singh
 Bachelor of Business Analytics, University of Newcastle
@@ -104,6 +104,6 @@ This project was developed as part of the BUSA3007 - Data Governance Using Block
 
 
 
-🪙 ##License
+### 🪙 **License**
 
 MIT License © 2025 Shreya Singh
