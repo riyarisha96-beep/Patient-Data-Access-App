@@ -50,8 +50,10 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 
-### 2. Smart Contract Deployment
-##Local Deployment
+---
+
+## ⚙️ Smart Contract Deployment 
+#Local Deployment
 
 cd blockchain
 npx hardhat node
