@@ -52,7 +52,7 @@ pip install -r requirements.txt
 
 ---
 
-## ⚙️ Smart Contract Deployment 
+## ⚙️Smart Contract Deployment
 #Local Deployment
 
 cd blockchain
