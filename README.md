@@ -8,20 +8,20 @@ This DApp empowers patients to control who can access their medical records whil
 ## 🚀 Project Overview
 
 This project demonstrates a blockchain-based **Data Governance solution** for healthcare systems.  
-Built with **Solidity**, **Hardhat**, and **Streamlit**, it showcases how smart contracts can enforce patient consent, traceability, and data integrity in medical record management.
+Built with **Solidity**, **Hardhat**, and **Streamlit**, it shows how smart contracts can enforce patient consent, traceability, and data integrity in medical record management.
 
 ### ✳️ Core Features
-- 🔐 **Smart Contract (Solidity)** — Defines rules for granting, revoking, and logging data access.
-- ⚙️ **Hardhat Backend** — Handles local or testnet deployment (Sepolia / localhost).
-- 🧠 **Streamlit Frontend** — Simple, interactive web interface for patient and provider operations.
-- 🔗 **Web3 Integration** — Seamless communication between Python and Ethereum smart contracts.
-- 🧾 **Contract Metadata Sync** — Automated handoff of `contract-info.json` from backend to frontend.
+- 🔐 **Smart Contract (Solidity)** — Rules for granting, revoking, and logging data access.
+- ⚙️ **Hardhat Backend** — Local or Sepolia testnet deployment.
+- 🧠 **Streamlit Frontend** — Simple, interactive web interface for patient & provider flows.
+- 🔗 **web3.py Integration** — Python ↔ Ethereum contract calls.
+- 🧾 **Contract Metadata Sync** — Automated `contract-info.json` handoff to the frontend.
 
 ---
 
 ## 🧰 Tech Stack
 | Layer | Technology |
-|-------|-------------|
+|---|---|
 | Smart Contract | Solidity (v0.8.24) |
 | Blockchain Framework | Hardhat |
 | Frontend | Streamlit |
@@ -31,81 +31,114 @@ Built with **Solidity**, **Hardhat**, and **Streamlit**, it showcases how smart 
 
 ---
 
-## ⚙️ Setup Instructions (macOS / Linux)
+## ⚙️ Setup (macOS / Linux)
 
 ### 1️⃣ Clone the repository
 ```bash
 git clone https://github.com/roseshreya22-stack/patient-data-access-app.git
 cd patient-data-access-app
-
-# Install Dependencies 
-##Backend 
-
-cd blockchain
-npm install
-
-##Frontend
-cd ../app
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+```
 
 ---
 
-### ⚙️Smart Contract Deployment
-#Local Deployment
+### 2️⃣ Smart Contract Deployment (Local or Sepolia)
 
+> **Prereqs**
+> - Node.js ≥ 18, npm
+> - Hardhat (installed per-project)
+> - A **Sepolia RPC** (e.g., Alchemy) and a **MetaMask** account if deploying to Sepolia
+
+#### A) Local Hardhat Network
+```bash
+# go to the blockchain workspace and install deps
 cd blockchain
+npm install
+
+# start a local node (terminal A)
 npx hardhat node
-# In another terminal
+```
+
+In **another terminal (B)**:
+```bash
+cd patient-data-access-app/blockchain
+# compile & deploy to localhost
+npx hardhat compile
 npx hardhat run --network localhost scripts/deploy.js
+```
 
-##This will deploy the contract to a local Hardhat blockchain and generate:
-artifacts-app/contract-info.json
+This generates **artifacts** and an app-friendly **`artifacts-app/contract-info.json`**.
 
-##Then copy it to the app directory:
+Copy it to the frontend:
+```bash
 cp artifacts-app/contract-info.json ../app/contract-info.json
+```
 
-### 🔹 Sepolia Testnet Deployment
-##1.Create a .env file in the blockchain folder:
+#### B) Sepolia Testnet (Alchemy + MetaMask)
+Create **`.env`** in `patient-data-access-app/blockchain`:
+```ini
 SEPOLIA_RPC=https://eth-sepolia.g.alchemy.com/v2/YOUR_ALCHEMY_KEY
-DEPLOYER_PRIVATE_KEY=0xYOUR_METAMASK_PRIVATE_KEY
+DEPLOYER_PRIVATE_KEY=0xYOUR_METAMASK_PRIVATE_KEY   # never commit this
+```
 
-##2.Deploy:
+Then deploy:
+```bash
+cd blockchain
+npm install
 npx hardhat compile
 npx hardhat run --network sepolia scripts/deploy.js
+```
 
-### 🖥️ Run the Streamlit App
+After a successful deploy, copy the generated contract metadata for the app:
+```bash
+cp artifacts-app/contract-info.json ../app/contract-info.json
+```
+
+> 🔐 **Security note:** Use a throwaway MetaMask account for testnets. Never expose real keys or commit `.env`.
+
+---
+
+### 3️⃣ Run the Streamlit App
+Create a Python venv and install requirements:
+```bash
 cd app
+python3 -m venv .venv
 source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+Start the app:
+```bash
 streamlit run app.py
+```
 
-##Patient View
-> Connect using your patient private key.
-> Grant or revoke access to healthcare providers.
-> View audit logs for all data access events.
+---
 
-##Provider View
-> Switch to a provider private key.
-> Attempt to log and verify access permissions.
+## 🧪 Using the App
 
+**Patient View**
+- Connect with your **patient** private key (test account).
+- Grant / revoke provider access.
+- View audit logs of all data access events.
 
+**Provider View**
+- Switch to a **provider** test key.
+- Attempt access and verify permission checks & logging.
 
-### 📚 Notes for Students / Developers
-	•	This prototype is for educational and demonstration purposes only.
-	•	No real patient data is stored on-chain — only pseudonymous access metadata.
-	•	Extensible for other governance use cases: supply chain, finance, or identity verification.
+---
 
+## 📚 Notes for Students / Developers
+- Prototype for **educational/demo** purposes only.  
+- **No real PHI** is stored on-chain; only pseudonymous access metadata.  
+- Extensible to other governance scenarios (supply chain, finance, identity).
 
+---
 
-### 👩‍💻 Authors
+## 👩‍💻 Author
+**Shreya Singh**  
+Bachelor of Business Analytics, University of Newcastle  
+Developed for **BUSA3007 – Data Governance Using Blockchain**.
 
-Shreya Singh
-Bachelor of Business Analytics, University of Newcastle
-This project was developed as part of the BUSA3007 - Data Governance Using Blockchain course.
+---
 
-
-
-### 🪙 License
-
+## 🪙 License
 MIT License © 2025 Shreya Singh
