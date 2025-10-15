@@ -11,11 +11,11 @@ This project demonstrates a blockchain-based **Data Governance solution** for he
 Built with **Solidity**, **Hardhat**, and **Streamlit**, it shows how smart contracts can enforce patient consent, traceability, and data integrity in medical record management.
 
 ### ✳️ Core Features
-- 🔐 **Smart Contract (Solidity)** — Rules for granting, revoking, and logging data access.
-- ⚙️ **Hardhat Backend** — Local or Sepolia testnet deployment.
-- 🧠 **Streamlit Frontend** — Simple, interactive web interface for patient & provider flows.
-- 🔗 **web3.py Integration** — Python ↔ Ethereum contract calls.
-- 🧾 **Contract Metadata Sync** — Automated `contract-info.json` handoff to the frontend.
+- 🔐 **Smart Contract (Solidity)** — Rules for granting, revoking, and logging data access.  
+- ⚙️ **Hardhat Backend** — Local blockchain network for deployment and testing.  
+- 🧠 **Streamlit Frontend** — Interactive web interface for patient and provider operations.  
+- 🔗 **Web3.py Integration** — Python ↔ Ethereum contract communication.  
+- 🧾 **Contract Metadata Sync** — Automated `contract-info.json` handoff between backend and frontend.
 
 ---
 
@@ -27,13 +27,13 @@ Built with **Solidity**, **Hardhat**, and **Streamlit**, it shows how smart cont
 | Frontend | Streamlit |
 | Python Library | web3.py |
 | Environment | Node.js, Python 3.10+, Git |
-| Network | Ethereum Sepolia Testnet / Localhost |
+| Network | Local Hardhat Network |
 
 ---
 
-## ⚙️ Setup (macOS / Linux)
+## ⚙️ Local Setup (macOS / Linux)
 
-### 1️⃣ Clone the repository
+### 1️⃣ Clone the Repository
 ```bash
 git clone https://github.com/roseshreya22-stack/patient-data-access-app.git
 cd patient-data-access-app
@@ -41,64 +41,41 @@ cd patient-data-access-app
 
 ---
 
-### 2️⃣ Smart Contract Deployment (Local or Sepolia)
+### 2️⃣ Smart Contract Deployment (Local Hardhat Network)
 
-> **Prereqs**
-> - Node.js ≥ 18, npm
-> - Hardhat (installed per-project)
-> - A **Sepolia RPC** (e.g., Alchemy) and a **MetaMask** account if deploying to Sepolia
+> **Prerequisites**
+> - Node.js ≥ 18 and npm installed  
+> - Hardhat (installed per-project)  
 
-#### A) Local Hardhat Network
+#### Steps:
 ```bash
-# go to the blockchain workspace and install deps
+# Navigate to the blockchain directory and install dependencies
 cd blockchain
 npm install
 
-# start a local node (terminal A)
+# Start a local Hardhat node (terminal A)
 npx hardhat node
 ```
 
 In **another terminal (B)**:
 ```bash
 cd patient-data-access-app/blockchain
-# compile & deploy to localhost
+# Compile and deploy the smart contract to the local network
 npx hardhat compile
 npx hardhat run --network localhost scripts/deploy.js
 ```
 
-This generates **artifacts** and an app-friendly **`artifacts-app/contract-info.json`**.
+This generates **artifacts** and an app-friendly **`artifacts-app/contract-info.json`** file.
 
-Copy it to the frontend:
+Copy it to the frontend directory:
 ```bash
 cp artifacts-app/contract-info.json ../app/contract-info.json
 ```
-
-#### B) Sepolia Testnet (Alchemy + MetaMask)
-Create **`.env`** in `patient-data-access-app/blockchain`:
-```ini
-SEPOLIA_RPC=https://eth-sepolia.g.alchemy.com/v2/YOUR_ALCHEMY_KEY
-DEPLOYER_PRIVATE_KEY=0xYOUR_METAMASK_PRIVATE_KEY   # never commit this
-```
-
-Then deploy:
-```bash
-cd blockchain
-npm install
-npx hardhat compile
-npx hardhat run --network sepolia scripts/deploy.js
-```
-
-After a successful deploy, copy the generated contract metadata for the app:
-```bash
-cp artifacts-app/contract-info.json ../app/contract-info.json
-```
-
-> 🔐 **Security note:** Use a throwaway MetaMask account for testnets. Never expose real keys or commit `.env`.
 
 ---
 
 ### 3️⃣ Run the Streamlit App
-Create a Python venv and install requirements:
+Create a Python virtual environment and install dependencies:
 ```bash
 cd app
 python3 -m venv .venv
@@ -111,33 +88,38 @@ Start the app:
 streamlit run app.py
 ```
 
+The Streamlit interface will open at:
+```
+http://localhost:8501
+```
+
 ---
 
-## 🧪 Using the App
+## 🧪 Using the Application
 
-**Patient View**
-- Connect with your **patient** private key (test account).
-- Grant / revoke provider access.
-- View audit logs of all data access events.
+**Patient Functions**
+- Use a **Hardhat test account** as a patient.  
+- Grant or revoke access for specific providers.  
+- Review the blockchain event logs of all data access requests.  
 
-**Provider View**
-- Switch to a **provider** test key.
-- Attempt access and verify permission checks & logging.
+**Provider Functions**
+- Use another **Hardhat test account** as a provider.  
+- Request access to patient data.  
+- Check permission and confirm transaction logs.
 
 ---
 
 ## 📚 Notes for Students / Developers
-- Prototype for **educational/demo** purposes only.  
-- **No real PHI** is stored on-chain; only pseudonymous access metadata.  
-- Extensible to other governance scenarios (supply chain, finance, identity).
+- Designed purely for **local development and testing**.  
+- **No real patient data** is stored on-chain; only encrypted and pseudonymous metadata.  
+- Demonstrates blockchain-based **data governance principles** such as transparency, traceability, and access control.
 
 ---
 
-## 👩‍💻 Author
-**Shreya Singh**,**Luke Hoskins**,**Jiyu Zhong**
-
+## 👩‍💻 Authors
+**Shreya Singh**, **Luke Hoskins**, **Jiyu Zhong**  
 Bachelor of Business Analytics, University of Newcastle  
-Developed for **BUSA3007 – Data Governance Using Blockchain**.
+Developed for **BUSA3007 – Data Governance Using Blockchain**
 
 ---
 
